@@ -11,6 +11,7 @@ rm -rf ${WORKSPACE}/gopath/src/github.com/hyperledger/fabric
 
 WD="${WORKSPACE}/gopath/src/github.com/hyperledger/fabric"
 REPO_NAME=fabric
+echo "------> Cloning fabric"
 git clone git://cloud.hyperledger.org/mirror/$REPO_NAME $WD
 cd $WD
 if [ "$FABRIC_COMMIT" == "latest" ]; then
@@ -27,6 +28,7 @@ export GOROOT=/opt/go/go$GO_VER.linux.amd64
 export PATH=$GOROOT/bin:$PATH
 echo "----> GO_VER" $GO_VER
 set -x
+echo "------> Building fabric images"
 make docker docker-thirdparty
 docker images | grep hyperledger
 
@@ -37,6 +39,7 @@ rm -rf ${WORKSPACE}/gopath/src/github.com/hyperledger/fabric-ca
 
 WD="${WORKSPACE}/gopath/src/github.com/hyperledger/fabric-ca"
 CA_REPO_NAME=fabric-ca
+echo "------> Cloning fabric-ca"
 git clone git://cloud.hyperledger.org/mirror/$CA_REPO_NAME $WD
 cd $WD
 if [ "$FABRIC_CA_COMMIT" == "latest" ]; then
@@ -53,6 +56,7 @@ export GOROOT=/opt/go/go$GO_VER.linux.amd64
 export PATH=$GOROOT/bin:$PATH
 echo "----> GO_VER" $GO_VER
 set -x
+echo "------> Building fabric-ca image"
 make docker-fabric-ca
 docker images | grep hyperledger
 
@@ -77,7 +81,5 @@ echo "========> Publish HTML Report <==========="
 echo "=========================================="
 echo "=========================================="
 curl -fSL https://dl.bintray.com/jeremy-long/owasp/dependency-check-3.0.2-release.zip -o dependency-check-3.0.2-release.zip
-unzip -q dependency-check-3.0.2-release.zip
 
-./dependency-check/bin/dependency-check.sh --project Testing -f HTML --out . --scan ./target
 tar cvf - target | xz -9zke >target.xz

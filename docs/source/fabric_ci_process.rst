@@ -151,7 +151,6 @@ A patchset is not elible to merge, if it even gets a single -1.
 .. figure:: ./images/views.png
    :alt: Views
 
-   Views
 
 Merge process for Fabric
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -231,7 +230,6 @@ logs (artifacts). CI publishes the logs(artifacts) on Jenkins console.
 .. figure:: ./images/console.png
    :alt: ConsoleOutPut
 
-   ConsoleOutPut
 
 Build Notifications
 ^^^^^^^^^^^^^^^^^^^^
@@ -256,13 +254,13 @@ click **Post**
    this job publishes images and binaries to nexus which further downloaded by SmokeTest and UnitTest
    jobs. Please make sure, images and binaries are published for that sepecific commit.
 
-   ``Run SmokeTest``       – Triggers fabric-smoke-tests-x86_64.
+-   ``Run SmokeTest``       – Triggers fabric-smoke-tests-x86_64.
    
-   ``Run IntegrationTest`` – Triggers fabric-smoke-tests-x86_64.
+-   ``Run IntegrationTest`` – Triggers fabric-verify-integration-tests-x86_64.
 
-   ``Run UnitTest``        –  Triggers fabric-verify-unit-tests-x86_64.
+-   ``Run UnitTest``        –  Triggers fabric-verify-unit-tests-x86_64.
 
-   ``Run DocsBuild``       – Triggers fabric-docs-build-x86_64
+-   ``Run DocsBuild``       – Triggers fabric-docs-build-x86_64
 
 This kicks off the specified Fabric verify jobs. Once the build is triggered, verify the Jenkins
 console output and go through the log messages if you are interested to know how the build is making

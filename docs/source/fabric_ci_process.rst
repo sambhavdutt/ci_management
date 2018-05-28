@@ -57,15 +57,13 @@ jobs. JJB has a flexible template system, so creating multiple jobs with a commo
 which is easy. More details about Jenkins Job Builder are available in `the JJB
 webpage <https://docs.openstack.org/infra/jenkins-job-builder/>`__.
 
-The following steps explains, what happens when a developer submits a patchset to the
-**Fabric** repository.
+Fabric CI Build Process
+^^^^^^^^^^^^^^^^^^^^^^^
 
 When a patchset is submitted to the `Fabric <https://jenkins.hyperledger.org/view/fabric/>`__
 repository, the Hyperledger Community CI server (Jenkins) triggers **Verify** jobs on **x86_64**
 platform using the patchset’s parent commit which may or may not be the latest commit on **Fabric**.
 
-Build Process
-^^^^^^^^^^^^^^
 
 The Fabric **verify** build process is split up into multiple jobs. The initial job
 (fabric-verify-build-checks-x86_64) is to build and publish docker images and binaries to
@@ -74,7 +72,7 @@ triggered conditions meets in ``fabric-verify-build-checks-x86_64`` CI job.
 
 Below are the conditions to trigger relevant jobs based on the patchset:
 
--  ``fabric-verify-build-checks-x86_64`` job triggers when a
+-  ``Test 1. fabric-verify-build-checks-x86_64`` job triggers when a
    ``patchset`` is created and it validates the patchsets git commit message.
 
    -  If the commit message has a WIP, the above build job **ignores**
@@ -91,7 +89,7 @@ Below are the conditions to trigger relevant jobs based on the patchset:
 
       ::
 
-           * Run DocBuild
+           * Test2. Run DocBuild
                - This comment triggers `fabric-docs-build-x86_64` CI job. Once the doc build is
                  successfully executed, Jenkins sends Fabric vote as `F2-DocsBuild=+1` otherwise as
                  `F2-DocsBuild=-1`
@@ -125,12 +123,12 @@ Below are the conditions to trigger relevant jobs based on the patchset:
                       - Once the documentation build is successful, it is archived, and the archives
                         built are published to Nexus.
 
-           * Run SmokeTest
+           * Test3. Run SmokeTest
                - This comment triggers `fabric-smoke-tests-x86_64` job and posts `F2-SmokeTest=+1`
                  to the patchset and triggers Unit-Test job by posting `Run UnitTest` comment if
                  successful, otherwise posts `F2-SmokeTest=-1` which doesn't trigger Unit-Test job.
 
-           * Run UnitTest
+           * Test4. Run UnitTest
                - This comment triggers `fabric-verify-unit-tests-x86_64` job and posts
                  `F3-UnitTest=+1` vote against the patchset if successful, otherwise `F3-UnitTest=-1`.
 
@@ -142,12 +140,13 @@ patchset should look like below.
 
 .. code:: shell
 
-    F1-VerifyBuild +1 Hyperledger Jobbuilder
-    F2-DocBuild    +1 Hyperledger Jobbuilder
-    F2-SmokeTest   +1 Hyperledger Jobbuilder
-    F3-UnitTest    +1 Hyperledger Jobbuilder
+    F1-VerifyBuild     +1 Hyperledger Jobbuilder
+    F2-DocBuild        +1 Hyperledger Jobbuilder
+    F2-SmokeTest       +1 Hyperledger Jobbuilder
+    F3-IntegrationTest +1 Hyperledger Jobbuilder
+    F3-UnitTest        +1 Hyperledger Jobbuilder
 
-patchset is not elible to merge, if it even gets one -1.
+A patchset is not elible to merge, if it even gets a single -1.
 
 .. figure:: ./images/views.png
    :alt: Views
@@ -257,11 +256,13 @@ click **Post**
    this job publishes images and binaries to nexus which further downloaded by SmokeTest and UnitTest
    jobs. Please make sure, images and binaries are published for that sepecific commit.
 
-   ``Run SmokeTest`` – Triggers fabric-smoke-tests-x86_64.
+   ``Run SmokeTest``       – Triggers fabric-smoke-tests-x86_64.
+   
+   ``Run IntegrationTest`` – Triggers fabric-smoke-tests-x86_64.
 
-   ``Run UnitTest``  –  Triggers fabric-verify-unit-tests-x86_64.
+   ``Run UnitTest``        –  Triggers fabric-verify-unit-tests-x86_64.
 
-   ``Run DocsBuild`` – Triggers fabric-docs-build-x86_64
+   ``Run DocsBuild``       – Triggers fabric-docs-build-x86_64
 
 This kicks off the specified Fabric verify jobs. Once the build is triggered, verify the Jenkins
 console output and go through the log messages if you are interested to know how the build is making

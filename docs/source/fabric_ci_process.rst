@@ -249,7 +249,7 @@ Step 1: Open the Gerrit patchset for which you want to reverify the build
 Step 2: Click on **Reply**, then type one of the below comments and
 click **Post**
 
-   ``VerifyBuild``   – Triggers fabric-verify-build-checks-x86_64 CI job, developers have to check
+-   ``VerifyBuild``   – Triggers fabric-verify-build-checks-x86_64 CI job, developers have to check
    the result of this job before posting the below comments on the patchset. As mentioned above,
    this job publishes images and binaries to nexus which further downloaded by SmokeTest and UnitTest
    jobs. Please make sure, images and binaries are published for that sepecific commit.

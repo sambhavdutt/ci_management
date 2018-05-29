@@ -70,7 +70,7 @@ The Fabric **verify** build process is split up into multiple jobs. The initial 
 Nexus3 and Nexus2. These images are later pulled/downloaded in the downstream jobs, when the
 triggered conditions are met in ``fabric-verify-build-checks-x86_64`` CI job.
 
-The relevant CI jobs are triggered depending on conditions in the patchset: 
+The relevant CI jobs are triggered depending on conditions in the patchset :
 
  -  ``Test-1. fabric-verify-build-checks-x86_64`` job triggers when a
     ``patchset`` is created and it validates the patchsets git commit message.

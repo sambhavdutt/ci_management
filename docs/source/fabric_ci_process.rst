@@ -71,8 +71,8 @@ Nexus3 and Nexus2. These images are later pulled/downloaded in the downstream jo
 triggered conditions are met in ``fabric-verify-build-checks-x86_64`` CI job.
 
 The relevant CI jobs are triggered depending on conditions in the patchset.
--
-    ``Test-1. fabric-verify-build-checks-x86_64`` job triggers when a ``patchset`` is created and it 
+
+-    ``Test-1. fabric-verify-build-checks-x86_64`` job triggers when a ``patchset`` is created and it 
     validates the patchsets git commit message.
 
       If the commit message has a WIP, the above build job **ignores**

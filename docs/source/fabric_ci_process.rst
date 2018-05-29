@@ -123,11 +123,15 @@ Below are the conditions to trigger relevant jobs based on the patchset:
                       - Once the documentation build is successful, it is archived, and the archives
                         built are published to Nexus.
 
-           * Test3. Run SmokeTest
+           * Test3. Test 3 runs two tests - SmokeTest and IntegrationTest
+           * Run SmokeTest
                - This comment triggers `fabric-smoke-tests-x86_64` job and posts `F2-SmokeTest=+1`
                  to the patchset and triggers Unit-Test job by posting `Run UnitTest` comment if
                  successful, otherwise posts `F2-SmokeTest=-1` which doesn't trigger Unit-Test job.
-
+           * Run IntegrationTest
+               - This comment triggers the `fabric-verify-integration-tests-x86_64` that executes
+                 the Go Integration tests.
+               
            * Test4. Run UnitTest
                - This comment triggers `fabric-verify-unit-tests-x86_64` job and posts
                  `F3-UnitTest=+1` vote against the patchset if successful, otherwise `F3-UnitTest=-1`.

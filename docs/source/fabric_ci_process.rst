@@ -68,9 +68,9 @@ platform using the patchset’s parent commit which may or may not be the latest
 The Fabric **verify** build process is split up into multiple jobs. The initial job
 (fabric-verify-build-checks-x86_64) is to build and publish docker images and binaries to
 Nexus3 and Nexus2. These images are later pulled/downloaded in the downstream jobs, when the
-triggered conditions meets in ``fabric-verify-build-checks-x86_64`` CI job.
+triggered conditions are met in ``fabric-verify-build-checks-x86_64`` CI job.
 
-Below are the conditions to trigger relevant jobs based on the patchset:
+The CI test's conditions trigger the relevant jobs based on the patchset:
 
 -  ``Test 1. fabric-verify-build-checks-x86_64`` job triggers when a
    ``patchset`` is created and it validates the patchsets git commit message.
@@ -123,11 +123,13 @@ Below are the conditions to trigger relevant jobs based on the patchset:
                       - Once the documentation build is successful, it is archived, and the archives
                         built are published to Nexus.
 
-           * Test3. Test 3 runs two tests - SmokeTest and IntegrationTest
+           * Test3. Test3 runs two tests - SmokeTest and IntegrationTest.
+
            * Run SmokeTest
                - This comment triggers `fabric-smoke-tests-x86_64` job and posts `F2-SmokeTest=+1`
                  to the patchset and triggers Unit-Test job by posting `Run UnitTest` comment if
                  successful, otherwise posts `F2-SmokeTest=-1` which doesn't trigger Unit-Test job.
+                 
            * Run IntegrationTest
                - This comment triggers the `fabric-verify-integration-tests-x86_64` that executes
                  the Go Integration tests.
@@ -252,7 +254,7 @@ Step 1: Open the Gerrit patchset for which you want to reverify the build
 
 Step 2: Click on **Reply**, then type one of the below comments and click **Post**.
 
-    ``VerifyBuild``           Triggers fabric-verify-build-checks-x86_64 CI job, the developers have to check
+    ``VerifyBuild``         - Triggers fabric-verify-build-checks-x86_64 CI job, the developers have to check
                               the result of this job before posting the below comments on the patchset. As mentioned above,
                               this job publishes images and binaries to nexus which further downloaded by SmokeTest and UnitTest
                               jobs. Please make sure, images and binaries are published for that sepecific commit.

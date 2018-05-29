@@ -72,15 +72,15 @@ triggered conditions are met in ``fabric-verify-build-checks-x86_64`` CI job.
 
 The relevant CI jobs are triggered depending on conditions in the patchset.
 
- -  ``Test-1. fabric-verify-build-checks-x86_64`` job triggers when a
+    ``Test-1. fabric-verify-build-checks-x86_64`` job triggers when a
     ``patchset`` is created and it validates the patchsets git commit message.
 
-   -  If the commit message has a WIP, the above build job **ignores**
+      If the commit message has a WIP, the above build job **ignores**
       to build the patchset and will not post a voting back to Fabric
       patchset. That means, this job skips the build process. You can see “WIP - No build” in the
       patchset’s result.
 
-   -  If the patchset has a **non WIP** in the commit
+      If the patchset has a **non WIP** in the commit
       message or if it is a **documentation change** with these file
       extensions (.rst, .md, .py, .png,.css,.html and .ini), the above
       job posts ``Run DocBuild`` comment and sends Fabric voting as
